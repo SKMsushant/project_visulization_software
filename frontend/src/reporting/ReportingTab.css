@@ -1,0 +1,70 @@
+/* ============================================ */
+/* ReportingTab Grid Styling */
+/* ============================================ */
+
+.react-grid-layout {
+    background: #e9ecef;
+}
+
+.react-grid-item {
+    touch-action: none;
+    transition: all 200ms ease;
+}
+
+.react-grid-item.react-grid-placeholder {
+    background: #007bff;
+    opacity: 0.2;
+    border-radius: 4px;
+}
+
+.react-grid-item > .react-resizable-handle {
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGhttp://firemeds.com/webSVG.htmlKSAtLT4KPHN2ZyBpZD0iVW50aXRsZWQtUGFnZSUyMDEiIHZpZXdCb3g9IjAgMCA2IDYiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmYwMCIgdmVyc2lvbj0iMS4xIgogICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIKICAgIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNnB4IiBoZWlnaHQ9IjZweCIKPjwvc3ZnPgo=');
+    background-position: bottom right;
+    padding: 0 8px 8px 0;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    box-sizing: border-box;
+    cursor: se-resize;
+}
+
+.react-grid-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Optional: Improve grid item appearance */
+.react-grid-item {
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.react-grid-item:hover {
+    border-color: #007bff;
+}
+
+/* Drag handle styling */
+.react-grid-item.cssTransforms {
+    transition-property: transform, width, height;
+}
+
+.react-grid-item.resizing {
+    transition: none;
+    z-index: 100;
+    will-change: width, height;
+}
+
+.react-grid-item.static {
+    background: #eee;
+}
+
+.react-grid-item.text {
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.react-grid-item.text textarea {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+}

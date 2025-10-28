@@ -1,0 +1,525 @@
+/* CODE FOR: frontend/src/SQLQueryPage.css */
+
+/* Main Container */
+.sql-query-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+/* Page Header */
+.page-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.page-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.btn-back {
+    background-color: #34495e;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.btn-back:hover {
+    background-color: #1a252f;
+}
+
+/* Query Layout - Sidebar + Content */
+.query-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Databases Sidebar */
+.databases-sidebar {
+    width: 250px;
+    background-color: #ecf0f1;
+    border-right: 1px solid #bdc3c7;
+    padding: 1rem;
+    overflow-y: auto;
+    min-width: 200px;
+}
+
+.databases-sidebar h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #3498db;
+}
+
+.database-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.database-item {
+    padding: 0.75rem;
+    background-color: white;
+    border: 1px solid #bdc3c7;
+    border-left: 4px solid #95a5a6;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.database-item:hover {
+    background-color: #ecf0f1;
+    border-left-color: #3498db;
+    transform: translateX(4px);
+}
+
+.database-item.active {
+    background-color: #3498db;
+    color: white;
+    border-left-color: #2980b9;
+    font-weight: 600;
+}
+
+.database-icon {
+    font-size: 1rem;
+}
+
+.loading-small,
+.no-databases {
+    padding: 1rem;
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+/* Query Content Area */
+.query-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+/* Editor Section - FIX: Set 60% height and prevent shrinking */
+.editor-section {
+    /* CRITICAL FIX: flex-grow: 0, flex-shrink: 0, flex-basis: 60% */
+    flex: 0 0 60%; 
+    min-height: 150px; 
+    
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.editor-header {
+    padding: 0.75rem 1rem;
+    background-color: #34495e;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.database-indicator {
+    font-size: 0.85rem;
+    background-color: #2c3e50;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+.keyboard-hint {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    background-color: #16a085;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.sql-editor {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    resize: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #2c3e50;
+    background-color: #f8f9fa;
+}
+
+.sql-editor:focus {
+    outline: none;
+    background-color: white;
+}
+
+.sql-editor::placeholder {
+    color: #95a5a6;
+}
+
+/* Action Buttons (Footer) */
+/* NOTE: These buttons should only be styled if they are moved elsewhere in JS */
+.action-buttons {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0;
+}
+
+.btn-execute,
+.btn-clear,
+.btn-export {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-execute {
+    background-color: #27ae60;
+    color: white;
+    flex: 1;
+}
+
+.btn-execute:hover:not(:disabled) {
+    background-color: #229954;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+}
+
+.btn-clear {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-clear:hover:not(:disabled) {
+    background-color: #7f8c8d;
+}
+
+.btn-execute:disabled,
+.btn-clear:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Result Section */
+.result-section {
+    flex: 1; /* Takes remaining 40% */
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    min-height: 50px;
+    overflow: hidden;
+}
+
+/* FIX: Thinner Results Header & Smaller Text */
+.result-header {
+    /* Reduced vertical padding (0.75rem -> 0.5rem) */
+    padding: 0.5rem 1rem; 
+    background-color: #34495e;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* FIX: Ensure Result/Messages text is smaller */
+.result-header span:first-child {
+    font-size: 0.9rem; /* Smaller size */
+    font-weight: 600; 
+}
+
+.error-badge,
+.success-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.error-badge {
+    background-color: #e74c3c;
+}
+
+.success-badge {
+    background-color: #27ae60;
+}
+
+/* Result Content with Scroll */
+.result-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 1rem;
+}
+
+.result-content::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.result-content::-webkit-scrollbar-track {
+    background: #ecf0f1;
+}
+
+.result-content::-webkit-scrollbar-thumb {
+    background: #95a5a6;
+    border-radius: 4px;
+}
+
+.result-content::-webkit-scrollbar-thumb:hover {
+    background: #7f8c8d;
+}
+
+/* Messages */
+.error-message,
+.success-message,
+.info-message {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.error-message {
+    background-color: #fadbd8;
+    color: #c0392b;
+    border-left: 4px solid #e74c3c;
+}
+
+.success-message {
+    background-color: #d5f4e6;
+    color: #27ae60;
+    border-left: 4px solid #27ae60;
+}
+
+.info-message {
+    background-color: #d6eaf8;
+    color: #2980b9;
+    border-left: 4px solid #3498db;
+}
+
+/* Executed Query Display (Kept for reference, but removed from JS) */
+.executed-query {
+    background-color: #ecf0f1;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 4px solid #3498db;
+}
+
+.executed-query p {
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.executed-query pre {
+    margin: 0;
+    padding: 0.75rem;
+    background-color: white;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #2c3e50;
+}
+
+/* Preview Container */
+.preview-container {
+    margin-bottom: 1rem;
+}
+
+.preview-container h4 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+/* Table Wrapper - Scrollable for large results */
+.table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+/* THE CRITICAL STICKY HEADER FIX */
+.results-table thead {
+    background-color: #34495e;
+    color: white;
+    position: sticky; 
+    top: 0 !important; 
+    z-index: 10;
+}
+
+.results-table th {
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    border-right: 1px solid #2c3e50;
+    white-space: nowrap;
+}
+
+.results-table th:last-child {
+    border-right: none;
+}
+
+.results-table tbody tr {
+    border-bottom: 1px solid #ecf0f1;
+    transition: background-color 0.2s;
+}
+
+.results-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.results-table td {
+    padding: 0.75rem;
+    border-right: 1px solid #ecf0f1;
+    max-width: 300px;
+    word-break: break-word;
+}
+
+.results-table td:last-child {
+    border-right: none;
+}
+
+/* Export Section */
+.export-section {
+    background-color: #ecf0f1;
+    padding: 1rem;
+    border-radius: 4px;
+    border-left: 4px solid #27ae60;
+}
+
+.export-section h4 {
+    margin: 0 0 0.75rem 0;
+    color: #2c3e50;
+}
+
+.export-title-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.export-title-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.btn-export {
+    background-color: #3498db;
+    color: white;
+    width: 100%;
+}
+
+.btn-export:hover:not(:disabled) {
+    background-color: #2980b9;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.btn-export:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+    color: #7f8c8d;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .databases-sidebar {
+        width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .query-layout {
+        flex-direction: column;
+    }
+
+    .databases-sidebar {
+        width: 100%;
+        height: 150px;
+        border-right: none;
+        border-bottom: 1px solid #bdc3c7;
+    }
+
+    .database-list {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .database-item {
+        flex-shrink: 0;
+        min-width: 120px;
+    }
+
+    .editor-section {
+        /* Revert to flexible on small screens to prevent overflow */
+        flex: 0 0 auto; 
+        min-height: 150px; 
+    }
+
+    .editor-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
