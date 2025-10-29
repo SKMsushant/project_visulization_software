@@ -209,7 +209,8 @@ def _generate_histogram(df, column_config, hypertune_params): # ADDED hypertune_
     fig = px.histogram(
         df, x=col, title=f'Distribution of {col}', marginal="box",
         template="plotly_white", nbins=nbins,
-        color_discrete_sequence=px.colors.named_colorscales[color_palette] if color_palette and color_palette != 'plotly' and color_palette in px.colors.named_colorscales else None
+        color_discrete_sequence=px.colors.named_colorscales[color_palette] 
+        if color_palette and color_palette != 'plotly' and color_palette in px.colors.named_colorscales else None
     )
 
     if lower_bound is not None and upper_bound is not None:
@@ -241,14 +242,15 @@ def _generate_kde_plot(df, column_config, hypertune_params): # ADDED hypertune_p
     analysis_parts.append("\nHow to read this chart:"); analysis_parts.append("- The height of the line represents the estimated density."); analysis_parts.append("- Two or more distinct peaks suggest a **multimodal** distribution.")
     analysis_text = "\n".join(analysis_parts)
 
-    sns.set_theme(style="whitegrid", palette="muted"); plt.figure(figsize=(10, 6)); sns.kdeplot(data=df, x=col, fill=True);
+    sns.set_theme(style="whitegrid", palette="muted"); plt.figure(figsize=(10, 6)); sns.kdeplot(data=df, x=col, fill=True)
 
     # Apply custom title manually for Matplotlib charts
     custom_title = hypertune_params.get('custom_title')
     plt.title(custom_title if custom_title else f'Density Plot (KDE) of {col}');
 
     plt.xlabel(col); plt.ylabel('Density'); plt.tight_layout()
-    buf = io.BytesIO(); plt.savefig(buf, format='png'); buf.seek(0); image_base64 = base64.b64encode(buf.read()).decode('utf-8'); plt.close()
+    buf = io.BytesIO(); plt.savefig(buf, format='png'); buf.seek(0); 
+    image_base64 = base64.b64encode(buf.read()).decode('utf-8'); plt.close()
 
     return {"chart_data": f"data:image/png;base64,{image_base64}", "analysis_text": analysis_text}
 

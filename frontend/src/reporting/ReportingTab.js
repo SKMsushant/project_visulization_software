@@ -1,12 +1,12 @@
-// frontend/src/reporting/ReportingTab.js - UPDATED
+// frontend/src/reporting/ReportingTab.js
 
 import React, { useState, useEffect, useCallback ,useMemo } from 'react';
-// Keep useNavigate import if used for other potential navigation
+
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../apiClient';
 import InteractiveFilter from './InteractiveFilter';
-import ShareModal from './ShareModal'; // Import ShareModal
-import ChartItem from './ChartItem'; // Import ChartItem
+import ShareModal from './ShareModal'; // 
+import ChartItem from './ChartItem'; // 
 import './ReportingTab.css';
 
 // React Grid Layout imports
@@ -486,7 +486,6 @@ useEffect(() => {
 }, []); // *** FIX: Only dependency needed is fetchReports
 
 
-// *** FIX 4 & 5: Interactive filtering AND bug fix for delete loop ***
 useEffect(() => {
     // Do not run this function if state isn't fully loaded
     if (!isStateLoaded) return;
