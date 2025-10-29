@@ -48,10 +48,9 @@ class UserSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-        # --- CUSTOM MANDATORY FIELD CHECKS (Truncated for brevity, assuming your logic here is correct) ---
         if not data.get('first_name', '').strip():
             raise serializers.ValidationError({"first_name": "First Name is required."})
-        # ... (rest of mandatory field checks) ...
+        
 
         # --- UNIQUENESS CHECKS ---
         if User.objects.filter(username=data.get('username')).exists():
@@ -159,7 +158,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
                 send_otp_multi_channel(mobile_number=profile.mobile_number, email=user_query.email, otp_code=otp_code, username=user_query.username)
                 # For safety, we skip the actual send call in the serializer for now, 
                 # but raise the required exception.
-                print(f"\n--- 2FA OTP for {user_query.username}:{otp_code} (OTP sent to {otp_destination}) ---")
+                print(f"\n--- 2FA OTP for {user_query.username}: (OTP sent to {otp_destination}) ---")
 
                 from rest_framework.exceptions import ValidationError
                 error = ValidationError({

@@ -265,7 +265,6 @@ const SQLQueryPage = () => {
     };
 
     const handleExportData = async () => {
-        // NOTE: We only allow export if the last executed command was a SELECT query
         if (commandType !== 'SELECT' || !executedQuery.trim()) {
             setError('Please execute a SELECT query first before exporting.');
             return;

@@ -149,7 +149,7 @@ const RegisterPage = () => {
     
     const passwordsMatch = formData.password === formData.confirm_password;
 
-    // --- NEW: Frontend validation for password match ---
+    // ---Frontend validation for password match ---
     if (!passwordsMatch) {
         setMessage(`Error: Passwords do not match.`);
         setIsLoading(false);
@@ -174,7 +174,7 @@ const RegisterPage = () => {
       }
     }
     
-    // Note: The backend CheckRegistrationView now handles the security checks 
+    // The backend CheckRegistrationView now handles the security checks 
     // for uniqueness and PII in password.
 
     try {

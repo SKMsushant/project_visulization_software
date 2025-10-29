@@ -585,13 +585,13 @@ const DataPrepPage = () => {
 
     // --- Chart Generation Logic (UPDATED VALIDATION) ---
     const handleGenerateChart = async () => {
-        // --- ADDED: Early exit if no chart selected ---
+        // Early exit if no chart selected ---
         if (!selectedChart) {
             setGenerationError("Please select a valid chart type first.");
             setIsGenerating(false);
             return;
         }
-        // --- END ADDED ---
+       
 
         // --- 1. Validate Mapping (MODIFIED FOR LINE CHART) ---
         let isMappingValid = false;
@@ -613,7 +613,7 @@ const DataPrepPage = () => {
                 return !!value;
             });
         }
-        // --- END MODIFICATION ---
+        
 
         if (!isMappingValid) {
             // --- UPDATED ERROR MESSAGE ---

@@ -272,7 +272,7 @@ const checkAndImportChart = useCallback(() => {
 
     // EFFECT: Persist all state changes to session storage
     useEffect(() => {
-        // *** FIX: Don't save anything until state is loaded/initialized
+        // ***  Don't save anything until state is loaded/initialized
         if (!isStateLoaded) {
             console.log("State not loaded yet, skipping session storage save.");
             return; 
@@ -293,7 +293,7 @@ const checkAndImportChart = useCallback(() => {
             console.error("Failed to save dashboard state to session storage:", e);
         }
         // This effect runs whenever the core dashboard state changes.
-    }, [isStateLoaded, pages, currentPageIndex, reportTitle, activeReport, activeFilters, CURRENT_DASHBOARD_STATE_KEY]); // *** FIX: Added isStateLoaded
+    }, [isStateLoaded, pages, currentPageIndex, reportTitle, activeReport, activeFilters, CURRENT_DASHBOARD_STATE_KEY]); // *** Added isStateLoaded
 
 
     useEffect(() => {
@@ -535,7 +535,7 @@ useEffect(() => {
                 columns: item.columnMapping,
                 hypertune_params: item.hypertuneParams,
                 
-                // *** THE NEW PART ***
+                
                 // Send the active filters to the backend
                 filters: activeFilters 
             };
@@ -575,7 +575,7 @@ useEffect(() => {
     refreshCharts();
     
 // This effect ONLY runs when filters or the page index change.
-}, [activeFilters, currentPageIndex, isStateLoaded, getAuthHeader, projectId]); // <-- CORRECTED Dependency Array
+}, [activeFilters, currentPageIndex, isStateLoaded, getAuthHeader, projectId]); // Dependency Array
 
 
     // --- Other Handlers (Mostly unchanged) ---
