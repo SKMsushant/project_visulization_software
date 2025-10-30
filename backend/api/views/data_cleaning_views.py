@@ -33,7 +33,8 @@ class CreateProjectView(generics.CreateAPIView):
         project_instance.data_file.save(uploaded_file.name, uploaded_file, save=True)
         
         # Use imported helper for file processing
-        processed_data, error, pickle_path = helpers.process_file(project_instance.data_file.path, os.path.splitext(uploaded_file.name)[1].lstrip('.').lower())
+        processed_data, error, pickle_path = helpers.process_file(project_instance.data_file.path, 
+                                                                  os.path.splitext(uploaded_file.name)[1].lstrip('.').lower())
         
         if error: 
             project_instance.delete()

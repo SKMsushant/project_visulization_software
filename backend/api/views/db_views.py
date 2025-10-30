@@ -15,10 +15,11 @@ from sqlalchemy import create_engine,text
 from sqlalchemy.exc import OperationalError, ProgrammingError
 import pymysql
 import psycopg2 # Required for PostgreSQL discovery
+import pymssql
 
 from ..serializers import DbConnectionSerializer, DbConnectionTestSerializer
 from ..models import DbConnection, DataProject # DataProject needed for QueryAndExport
-from .. import helpers # CORRECTED: Import helpers file from parent directory
+from .. import helpers 
 
 # --- DB CONNECTION VIEWS ---
 
@@ -93,7 +94,10 @@ class DbConnectionTestView(APIView):
             return Response({"error": f"An unknown error occurred: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 class SimpleDbTestView(APIView):
-    """Ultra-simple DB test - used for basic connectivity check in modal."""
+    """
+    Ultra-simple DB test - used for basic connectivity check in modal.
+    NOW supports MySQL, PostgreSQL, and MS SQL Server.
+    """
     permission_classes = [IsAuthenticated]
     
     def post(self, request):
@@ -115,7 +119,6 @@ class SimpleDbTestView(APIView):
                     password=password,
                     connect_timeout=5
                 )
-                
                 cursor = connection.cursor()
                 cursor.execute("SHOW DATABASES")
                 databases = [row[0] for row in cursor.fetchall()]
@@ -129,17 +132,88 @@ class SimpleDbTestView(APIView):
                     "message": "Direct connection successful!",
                     "databases": user_databases,
                 }, status=200)
+            
+            
+            elif db_type == 'postgres':
+                
+                connection = psycopg2.connect(
+                    host=host,
+                    port=int(port),
+                    user=username,
+                    password=password,
+                    connect_timeout=5,
+                    database='postgres' 
+                )
+                connection.autocommit = True 
+                cursor = connection.cursor()
+                cursor.execute("SELECT datname FROM pg_database WHERE datistemplate = false;")
+                databases = [row[0] for row in cursor.fetchall()]
+                user_databases = [
+                    db for db in databases
+                    if db not in ('postgres', 'template0', 'template1')
+                ]
+                cursor.close(); connection.close()
+                
+                return Response({
+                    "message": "Direct connection successful!",
+                    "databases": user_databases,
+                }, status=200)
+
+
+            elif db_type == 'mssql':
+                connection = pymssql.connect(
+                    server=host, 
+                    port=int(port),
+                    user=username,
+                    password=password,
+                    timeout=5 
+                )
+                cursor = connection.cursor()
+                cursor.execute("SELECT name FROM sys.databases;")
+                databases = [row[0] for row in cursor.fetchall()]
+                user_databases = [
+                    db for db in databases
+                    if db not in ('master', 'tempdb', 'model', 'msdb')
+                ]
+                cursor.close(); connection.close()
+                
+                return Response({
+                    "message": "Direct connection successful!",
+                    "databases": user_databases,
+                }, status=200)
+
             else:
                  return Response({"error": f"Direct testing not implemented for {db_type} in this simple view."}, status=400)
             
         except pymysql.err.OperationalError as e:
+            # Specific MySQL errors
             error_code, error_msg = e.args
             if error_code == 2003:
-                return Response({"error": f"Cannot connect to MySQL server on '{host}:{port}'. Make sure MySQL is running and accessible."}, status=400)
+                return Response({"error": f"Cannot connect to MySQL server on '{host}:{port}'. Make sure the server is running and accessible."}, status=400)
             elif error_code == 1045:
-                return Response({"error": f"Access denied for user '{username}'. Check your password."}, status=400)
+                return Response({"error": f"Access denied for user '{username}' (MySQL). Check your password."}, status=400)
             else:
                 return Response({"error": f"MySQL Error ({error_code}): {error_msg}"}, status=400)
+        
+        except psycopg2.OperationalError as e:
+            # Generic PostgreSQL error
+            error_msg = str(e).strip()
+            if "password authentication failed" in error_msg:
+                return Response({"error": f"Access denied for user '{username}' (PostgreSQL). Check your password."}, status=400)
+            elif "Connection timed out" in error_msg or "could not connect" in error_msg:
+                 return Response({"error": f"Cannot connect to PostgreSQL server on '{host}:{port}'. Check host, port, and network access."}, status=400)
+            else:
+                return Response({"error": f"PostgreSQL Error: {error_msg}"}, status=400)
+        
+        except pymssql.OperationalError as e:
+            # Generic MS SQL error
+            error_msg = str(e).strip()
+            if "Login failed" in error_msg:
+                 return Response({"error": f"Access denied for user '{username}' (MS SQL). Check your password."}, status=400)
+            elif "Unable to connect" in error_msg:
+                 return Response({"error": f"Cannot connect to MS SQL server on '{host}:{port}'. Check host, port, and network access."}, status=400)
+            else:
+                return Response({"error": f"MS SQL Error: {error_msg}"}, status=400)
                 
         except Exception as e:
             return Response({"error": f"Unexpected error: {str(e)}"}, status=500)

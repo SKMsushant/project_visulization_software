@@ -81,7 +81,6 @@ const DashboardPage = () => {
             setMessage('Error: File size exceeds 500MB limit.');
             return;
         }
-        
         const authHeader = getAuthHeader();
         if (!authHeader) return;
 
@@ -149,8 +148,9 @@ const DashboardPage = () => {
             {/* --- NEW FLEX CONTAINER FOR UPLOAD AND DB IMPORT --- */}
             <div style={{ display: 'flex', gap: '20px', marginTop: '25px', marginBottom: '40px' }}>
                 
-                {/* 1. Upload Section (Existing Code Refactored) */}
-                <div style={{ flex: 1, border: '1px solid #007bff', padding: '25px', borderRadius: '10px', backgroundColor: '#e9f7ff' }}>
+                {/* 1. Upload Section */}
+                <div style={{ flex: 1, border: '1px solid #007bff', padding: '25px', 
+                    borderRadius: '10px', backgroundColor: '#e9f7ff' }}>
                     <h3 style={{ margin: '0 0 15px 0' }}>Upload New Data Project</h3>
                     <input 
                         type="file" 
@@ -163,7 +163,8 @@ const DashboardPage = () => {
                     <button 
                         onClick={handleUpload} 
                         disabled={isLoading || !selectedFile} 
-                        style={{ marginLeft: '15px', padding: '10px 20px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                        style={{ marginLeft: '15px', padding: '10px 20px', backgroundColor: '#28a745', 
+                            color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
                     >
                         {isLoading ? 'Processing...' : 'Upload Data'}
                     </button>
