@@ -39,7 +39,7 @@ const ColumnSelector = ({
             border: `2px solid ${headerColor}`,
             padding: '10px',
             borderRadius: '4px',
-            backgroundColor: '#fff',
+            backgroundColor: '#8b2222ff',
             position: 'relative',
             overflowY: 'auto',
             boxSizing: 'border-box'
